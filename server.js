@@ -16,24 +16,13 @@ io.on('connect', socket => {
       socket.broadcast.emit('got', data)
     });
 
-      
-      //   socket.on('message', data => {
-          //     const msg = data
-          //     console.log(msg.id, msg.msg);
-          //     chatLog.push(msg)
-          //   });
-          
-          
-          
+
+
+
+
+
+    
   });
-
-
-
-
-
-
-
-
 httpServer.listen(PORT, () => {
   console.log('go to http://localhost:'+PORT);
 });

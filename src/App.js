@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "https://simpvserv.herokuapp.com/";
+const ENDPOINT = "http://localhost:8888/";
 const socket = socketIOClient(ENDPOINT);
 
 
@@ -29,52 +29,54 @@ function App() {
 
   navigator.mediaDevices.getUserMedia(constraints)
 .then((stream)=> {
-
+  
   var mediaRecorder = new MediaRecorder(stream);
   mediaRecorder.onstart = function(e) {
-      this.chunks = [];
+    this.chunks = [];
   };
   mediaRecorder.ondataavailable = function(e) {
-      this.chunks.push(e.data);
-      var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
-      socket.emit('video', blob);
-    };
+    this.chunks.push(e.data);
+    var blob = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
+    socket.emit('video', blob);
+    // mediaRecorder.start();
+  };
   //   mediaRecorder.onstop = function(e) {
-  // };
-
-  // Start recording
-  mediaRecorder.start();
-
-  // Stop recording after 5 seconds and broadcast it server
-  setInterval(() => {
-    // setTimeout(function() {
+    // };
+    
+    mediaRecorder.start();
+    
+    // Start recording
+    
+    // Stop recording after 5 seconds and broadcast it server
+    setInterval(() => {
+      // setTimeout(function() {
         mediaRecorder.stop()
         mediaRecorder.start();
-      // }, 1000);
-
-  }, 700);
-  // console.log(stream)
-  // if (video.current) {
-    // var userVideoStream = stream
-    // video.current.srcObject = stream
-    socket.on('got', function(arrayBuffer) {
+      }, 800);
+      
+    // }, 100);
+    // console.log(stream)
+    // if (video.current) {
+      // var userVideoStream = stream
+      // video.current.srcObject = stream
+      socket.on('got', function(arrayBuffer) {
         var blob = new Blob([arrayBuffer], { 'type' : 'audio/ogg; codecs=opus' });
         var audio = document.createElement('audio');
         audio.src = window.URL.createObjectURL(blob);
         audio.play();
-  });
-    console.log(stream)
-// }
-  
-})
-
-
-  // navigator.mediaDevices.getUserMedia(constraints).then(stream=>{
-
-  // });
-
-  return (
-    <div className="App">
+      });
+      console.log(stream)
+      // }
+      
+    })
+    
+    
+    // navigator.mediaDevices.getUserMedia(constraints).then(stream=>{
+      
+      // });
+      
+      return (
+        <div className="App">
       <header className="App-header">
       <div id="container">
       {/* <video ref={video} id="gum-local" controls autoPlay></video>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:8888/";
+const ENDPOINT = "https://simpvserv.herokuapp.com/";
 const socket = socketIOClient(ENDPOINT);
 
 
